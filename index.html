@@ -29,6 +29,9 @@
 </head>
 
 <body onload="init()" onresize="widthUpdate()">
+    <div id="rotate-your-device" class="rotate-your-device">
+        <img class="rotating-container" src="./img/rotation.png">
+    </div>
     <div id="how-to-play-overlayer" class="how-to-play-overlayer">
         <div class="how-to-play-container">
             <button class="close-button" onclick="closeHowToPlay()">&times;</button>
@@ -57,16 +60,17 @@
         <div id="menu-overlayer" class="menu-overlayer">
             <div id="menu" class="menu">
                 <div id="upper-bar" class="upper-bar">
-                    <button class="fullscreenBtn btn" onclick="updateFullscreen()"><img id="min-max-btn"
+                    <button class="fullscreenBtn" onclick="updateFullscreen()"><img id="min-max-btn"
                             src="./img/max.png" width="40px"></button>
-                    <button class="fullscreenBtn btn" onclick="muteAll()"><img id="sound-on-off-img"
+                    <button class="fullscreenBtn" onclick="muteAll()"><img id="sound-on-off-img"
                             src="./img/soundOn.png" width="40px"></button>
-                    <button id="restart-btn" class="btn" onclick="pause()"><img src="./img/pause.png"
+                    <button id="pause-btn" class="fullscreenBtn" onclick="pause()"><img src="./img/pause.png"
                             width="40px"></button>
                 </div>
                 <div id="game-restart-container" class="game-restart-container">
                     <b>Menu</b>
-                    <button id="restart-btn" class="restart-and-next-btn" onclick="gameContinue()"><img
+                    <b id="Congratulations">🎉Congratulations, you have won the game🤩🤑</b>
+                    <button id="continue-btn" class="restart-and-next-btn" onclick="gameContinue()"><img
                             src="./img/continue.png" width="30px">Continue</button>
                     <button id="restart-btn" class="restart-and-next-btn" onclick="retry()"><img src="./img/restart.png"
                             width="30px">Retry</button>
@@ -101,7 +105,7 @@
             </div>
         </div>
     </div>
-    <a class="impressum-link" href="impressum.html" target="_blank">Impressum</a>
+    <a id="impressum-link" class="impressum-link" href="impressum.html">Impressum</a>
 </body>
 
 </html>

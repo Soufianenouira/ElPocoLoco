@@ -7,6 +7,10 @@
  */
 class Endboss extends MovableObject {
 
+    collidedwithCharacter = false;
+
+    targetReached = true;
+
     /**
      * The y-coordinate of the Endboss.
      * @type {number}
@@ -65,7 +69,7 @@ class Endboss extends MovableObject {
      * The movement speed of the Endboss.
      * @type {number}
      */
-    speed = 2;
+    speed = 5;
 
     /**
      * Array of image paths for the Endboss's idle animation.
@@ -93,6 +97,13 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/1_walk/G4.png'
     ];
 
+    images_walking_back = [
+        './img/4_enemie_boss_chicken/6_walk_back/G1.png',
+        './img/4_enemie_boss_chicken/6_walk_back/G2.png',
+        './img/4_enemie_boss_chicken/6_walk_back/G3.png',
+        './img/4_enemie_boss_chicken/6_walk_back/G4.png'
+    ];
+
     /**
      * Array of image paths for the Endboss's hurt animation.
      * @type {string[]}
@@ -103,6 +114,17 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/4_hurt/G23.png',
     ];
 
+    images_attack = [
+        './img/4_enemie_boss_chicken/3_attack/G13.png',
+        './img/4_enemie_boss_chicken/3_attack/G14.png',
+        './img/4_enemie_boss_chicken/3_attack/G15.png',
+        './img/4_enemie_boss_chicken/3_attack/G16.png',
+        './img/4_enemie_boss_chicken/3_attack/G17.png',
+        './img/4_enemie_boss_chicken/3_attack/G18.png',
+        './img/4_enemie_boss_chicken/3_attack/G19.png',
+        './img/4_enemie_boss_chicken/3_attack/G20.png'
+    ];
+
     /**
      * Creates an instance of an Endboss object.
      * 
@@ -110,8 +132,10 @@ class Endboss extends MovableObject {
      */
     constructor(x){
         super().loadImage('./img/4_enemie_boss_chicken/2_alert/G5.png');
-        this.loadimages(this.images_idle);
+        this.loadimages(this.images_walking_back);
+        this.loadimages(this.images_walking);
         this.loadimages(this.images_hurt);
+        this.loadimages(this.images_attack);
         this.x = x;
         this.animate();
     }
@@ -124,10 +148,30 @@ class Endboss extends MovableObject {
      */
     animate(){
         setInterval(() => {
+            if(this.x <= 7000){
+                this.targetReached = false;
+            }else if(this.x == 8000){
+                this.targetReached = true;
+            }
+            if(!this.isDead() && !this.collidedwithCharacter){
+                if(this.x > 7000 && this.targetReached){
+                    this.moveLeft();
+                }else{
+                    this.moveRight();
+                }
+            }
+        }, 1000 / 60);
+        setInterval(() => {
             if (this.isHurt()) {
                 this.playAnimation(this.images_hurt);            
-            } else {
-                this.playAnimation(this.images_idle);
+            }else if(!this.collidedwithCharacter) {
+                if(this.x > 7000 && this.targetReached){
+                    this.playAnimation(this.images_walking_back);
+                }else{
+                    this.playAnimation(this.images_walking);
+                }
+            }else{
+                this.playAnimation(this.images_attack);
             }
         }, 200);
     }

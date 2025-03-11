@@ -17,12 +17,6 @@ let coinsCounterStartValue = 0;
 function init() {
     canvas = document.getElementById('canvas');
     widthUpdate();
-    if (detectDevice() == "Mobile") {
-        document.getElementById('bottom-bar').style.display = 'flex';
-    }
-    if(world){
-        world.audios[0].loop = true;
-    }
 }
 
 /**
@@ -50,6 +44,7 @@ window.addEventListener("keyup", (e) => {
 function startGame() {
     document.getElementById('continue-show-btn').style.display = 'flex';
     document.getElementById('new-game-btn').style.display = 'none';
+    document.getElementById('impressum-link').style.display = 'none';
     canvas.style.display = 'block';
     document.getElementById('menu-overlayer').style.display = 'flex';
     document.getElementById('start-img').style.display = 'none';
@@ -57,6 +52,7 @@ function startGame() {
     world = new World(canvas, keyboard);
     world.keyboard.bindKeyPressEvents();
     world.audios[0].play();
+    world.audios[0].loop = true;
     enableChickensMoveParameter();
     audiosMuted = Number(localStorage.getItem("audiosMuted"));
     muteAll();
@@ -134,6 +130,7 @@ function resetChickens(chickensStartPosition, enemy) {
     enemy.isDead = false;
     enemy.offsetRight = 10;
     enemy.offsetTop = 40;
+    enemy.y = 350;
 }
 
 /**
@@ -143,15 +140,14 @@ function resetChickens(chickensStartPosition, enemy) {
 function resetEndBoss(enemy) {
     enemy.width = 300;
     enemy.energy = 30;
+    enemy.collidedwithCharacter = false;
+    world.endBossEnergy = '3x';
 }
 
 /**
  * Displays control buttons based on the device type.
  */
 function showControlButtons() {
-    if (detectDevice() == "Mobile") {
-        document.getElementById('bottom-bar').style.display = 'flex';
-    }
     document.getElementById('upper-bar').style.display = 'flex';
     document.getElementById('menu').style.justifyContent = 'space-between';
     document.getElementById('game-restart-container').style.display = 'none';
@@ -170,7 +166,7 @@ function hideGameOverImg() {
  * @param {number} chickensStartPosition - The starting position for chickens.
  */
 function resetEnemies(chickensStartPosition) {
-    level1.enemies.forEach((enemy) => {
+    world.level.enemies.forEach((enemy) => {
         if (enemy instanceof Chicken) {
             resetChickens(chickensStartPosition, enemy);
             chickensStartPosition += 400;
@@ -240,12 +236,19 @@ function retry() {
     enableChickensMoveParameter();
     world.audios[0].play();
     showControlButtons();
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('Congratulations').style.display = 'none';
+    document.getElementById('continue-btn').style.display = 'flex';
+    if(world.level == level2){
+        adaptChickensY(280);
+    }
 }
 
 /**
  * Advances to the next level.
  */
 function nextLevel() {
+    let chickensStartPosition = 2000;
     world.level = level2;
     world.audios[0].play();
     world.character.damage = 20;
@@ -254,9 +257,13 @@ function nextLevel() {
     hideGameOverImg();
     prepareCharacterforLevel2();
     enableChickensMoveParameter();
-    adaptChickensY(280);
     statusbarsGetreadyForNextLevel();
     showControlButtons();
+    resetEnemies(chickensStartPosition);
+    adaptChickensY(280);
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('continue-btn').style.display = 'flex';
+    world.character.gameOverAnimated = false;
 }
 
 /**
@@ -313,6 +320,7 @@ function gameContinue() {
     enableChickensMoveParameter();
     world.audios[0].play();
     showControlButtons();
+    document.getElementById('bottom-bar').style.display = 'flex';
 }
 
 /**
@@ -323,6 +331,7 @@ function exit() {
     let menu = document.getElementById('menu-overlayer');
     let startImg = document.getElementById('start-img');
     let h1 = document.getElementById('h1');
+    document.getElementById('impressum-link').style.display = 'flex';
     canvas.style.display = 'none';
     menu.style.display = 'none';
     startImg.style.display = 'flex';
@@ -343,6 +352,7 @@ function show() {
     menu.style.display = 'flex';
     startImg.style.display = 'none';
     h1.style.display = 'none';
+    document.getElementById('impressum-link').style.display = 'none';
 }
 
 /**

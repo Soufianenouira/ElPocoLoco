@@ -5,6 +5,7 @@
 function detectDevice() {
     const userAgent = navigator.userAgent.toLowerCase();
     if (/mobile|android|iphone|ipad|ipod|windows phone/i.test(userAgent)) {
+        document.getElementById('bottom-bar').style.display = 'flex';
         return "Mobile";
     } else {
         return "Desktop";
@@ -66,6 +67,12 @@ function widthUpdate() {
         } else if (window.innerWidth <= 720 && window.innerHeight <= 480) {
             widthUpdateCase4();
         }
+    }
+    if(window.matchMedia("(orientation: portrait)").matches){
+        document.getElementById('rotate-your-device').style.display = 'flex';
+        if(world){pause();}
+    }else{
+        document.getElementById('rotate-your-device').style.display = 'none';
     }
 }
 

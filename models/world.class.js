@@ -197,6 +197,8 @@ class World {
         this.level.enemies.forEach((enemy, indexEnemy)=>{
             if(this.character.isIncolliding(enemy) && enemy instanceof Endboss){
                 this.character.energy = 0;
+                this.characterenergy = '0%';
+                enemy.collidedwithCharacter = true;
             }
         });
     }

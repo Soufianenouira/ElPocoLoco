@@ -7,6 +7,8 @@
  */
 class Chicken extends MovableObject { 
 
+    deadYPosition = 0;
+
     /**
      * The y-coordinate of the chicken object.
      * @type {number}
@@ -72,17 +74,18 @@ class Chicken extends MovableObject {
      * @type {string[]}
      */
     images_walking = [
-        './img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
-        './img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
-        './img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
+        `./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png`,
+        `./img/3_enemies_chicken/chicken_normal/1_walk/2_w.png`,
+        `./img/3_enemies_chicken/chicken_normal/1_walk/3_w.png`
     ];
+    
 
     /**
      * Array of image paths for the chicken's dead animation.
      * @type {string[]}
      */
     images_dead = [
-        './img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
+        `./img/3_enemies_chicken/chicken_normal/2_dead/dead.png`
     ];
 
     /**
@@ -90,9 +93,10 @@ class Chicken extends MovableObject {
      * 
      * @param {number} x - The x-coordinate of the chicken object.
      */
-    constructor(x){
+    constructor(x, deadYPosition){
         super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.x = x;
+        this.deadYPosition = deadYPosition;
         this.speed = 1.5 + 1 * Math.random();
         this.loadimages(this.images_walking);
         this.loadimages(this.images_dead);
@@ -116,6 +120,7 @@ class Chicken extends MovableObject {
         setInterval(() => {
             if(this.chickenCanStartWalking){
                 if(this.isDead){
+                    this.y = this.deadYPosition;
                     this.playAnimation(this.images_dead);
                 } else {
                     this.playAnimation(this.images_walking);

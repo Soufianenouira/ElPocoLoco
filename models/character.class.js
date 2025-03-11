@@ -183,12 +183,12 @@ class Character extends MovableObject {
      */
     animate() {
         setInterval(() => {
-            if ((this.right || this.world.keyboard.ArrowRight) && this.x < level1.level_end_x && !this.isDead()) {
+            if ((this.right || this.world.keyboard.ArrowRight) && this.x < level1.level_end_x && !this.isDead() && !this.world.isGameOver) {
                 this.startMovingRight();
-            } else if ((this.left || this.world.keyboard.ArrowLeft) && this.x > 0 && !this.isDead()) {
+            } else if ((this.left || this.world.keyboard.ArrowLeft) && this.x > 0 && !this.isDead() && !this.world.isGameOver) {
                 this.startMovingLeftt();
             }
-            if (this.world.keyboard.ArrowUp && this.y == this.characterStartY && !this.isDead() && !this.isHurt()) {
+            if (this.world.keyboard.ArrowUp && this.y == this.characterStartY && !this.isDead() && !this.isHurt() && !this.world.isGameOver) {
                 this.jump();
             }
             this.world.camera_x = -this.x + 100;
@@ -290,7 +290,11 @@ class Character extends MovableObject {
         document.getElementById('upper-bar').style.display = 'none';
         document.getElementById('menu').style.justifyContent = 'center';
         document.getElementById('game-restart-container').style.display = 'flex';
-        document.getElementById('next-btn').style.display = 'flex';
+        if(this.world.level == level2){
+            document.getElementById('Congratulations').style.display = 'flex';
+        }else{
+            document.getElementById('next-btn').style.display = 'flex';
+        }
     }
 
     /**
@@ -299,8 +303,10 @@ class Character extends MovableObject {
     deadAnimation() {
         setInterval(() => {
             if (this.isDead()) {
+                document.getElementById('continue-btn').style.display = 'none';
                 this.startDeadAnimation();
             } else if (this.world.isGameOver) {
+                document.getElementById('continue-btn').style.display = 'none';
                 this.startGameOverAnimation();
             } else {
                 this.startAnimation();

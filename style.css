@@ -17,10 +17,75 @@ body {
     margin: 0;
 }
 
-main{
+.bottom-bar {
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.rotate-your-device{
+    width: 100%;
+    height: 100%;
+    background-color: #feb47b90;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    position: fixed;
+}
+
+.rotating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    color: white;
+    text-align: center;
+    animation: rotate 2s infinite alternate;
+}
+
+@media (hover: none) and (orientation: portrait) {
+    /* Kombination der zwei werte - nur fÃ¼r mobile EndgerÃ¤te im portrait modus */
+
+    .bottom-bar {
+        display: flex;
+    }
+    .rotate-your-device{
+        display: flex;
+    }
+}
+
+@media (hover: none) and (orientation: landscape) {
+    /* Kombination der zwei werte - nur fÃ¼r mobile EndgerÃ¤te im landscape modus */
+
+    .bottom-bar {
+        display: flex;
+    }
+
+    .rotate-your-device{
+        display: none;
+    }
+}
+
+/* Animation */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(90deg);
+    }
+}
+
+main {
     background-color: rgba(255, 255, 255, 0.635);
     padding: 20px;
     border-radius: 12px;
+    overflow-y: scroll;
 }
 
 canvas {
@@ -161,14 +226,6 @@ h1 {
     width: 100%;
 }
 
-.bottom-bar {
-    display: none;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
 #next-btn {
     display: none;
 }
@@ -178,9 +235,24 @@ h1 {
 }
 
 .fullscreenBtn {
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.55);
     border: 0;
     font-size: 32px;
+    margin: 2px;
+    border-radius: 12px;
+    padding: 3px;
+}
+
+.fullscreenBtn:hover {
+    cursor: pointer;
+    background-color: rgba(205, 123, 194, 0.381);
+}
+
+#pause-btn {
+    padding-left: 7px;
+    padding-top: 5px;
+    padding-right: 0px;
+    padding-bottom: 0px;
 }
 
 .btn {
@@ -400,6 +472,13 @@ b {
     }
 }
 
+#Congratulations{
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+    display: none;
+}
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
@@ -411,7 +490,7 @@ b {
 }
 
 @media only screen and (max-height: 480px) {
-    h1 {
+    #h1 {
         display: none;
     }
 
