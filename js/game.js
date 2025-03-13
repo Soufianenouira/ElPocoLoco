@@ -17,6 +17,7 @@ let coinsCounterStartValue = 0;
 function init() {
     canvas = document.getElementById('canvas');
     widthUpdate();
+    detectDevice();
 }
 
 /**
@@ -56,6 +57,9 @@ function startGame() {
     enableChickensMoveParameter();
     audiosMuted = Number(localStorage.getItem("audiosMuted"));
     muteAll();
+    if(detectDevice() == 'Mobile'){
+        updateFullscreen();
+    }
 }
 
 /**
@@ -242,6 +246,9 @@ function retry() {
     if(world.level == level2){
         adaptChickensY(280);
     }
+    if(detectDevice() == 'Mobile'){
+        document.getElementById('bottom-bar').style.display = 'flex';
+    }
 }
 
 /**
@@ -264,6 +271,9 @@ function nextLevel() {
     document.getElementById('next-btn').style.display = 'none';
     document.getElementById('continue-btn').style.display = 'flex';
     world.character.gameOverAnimated = false;
+    if(detectDevice() == 'Mobile'){
+        document.getElementById('bottom-bar').style.display = 'flex';
+    }
 }
 
 /**
@@ -320,7 +330,9 @@ function gameContinue() {
     enableChickensMoveParameter();
     world.audios[0].play();
     showControlButtons();
-    document.getElementById('bottom-bar').style.display = 'flex';
+    if(detectDevice() == 'Mobile'){
+        document.getElementById('bottom-bar').style.display = 'flex';
+    }
 }
 
 /**
@@ -353,6 +365,10 @@ function show() {
     startImg.style.display = 'none';
     h1.style.display = 'none';
     document.getElementById('impressum-link').style.display = 'none';
+    if(detectDevice() == 'Mobile'){
+        updateFullscreen();
+        document.getElementById('bottom-bar').style.display = 'flex';
+    }
 }
 
 /**

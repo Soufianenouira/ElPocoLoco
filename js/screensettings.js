@@ -6,6 +6,7 @@ function detectDevice() {
     const userAgent = navigator.userAgent.toLowerCase();
     if (/mobile|android|iphone|ipad|ipod|windows phone/i.test(userAgent)) {
         document.getElementById('bottom-bar').style.display = 'flex';
+        document.getElementById('min-max-btn').style.display = 'none';
         return "Mobile";
     } else {
         return "Desktop";
