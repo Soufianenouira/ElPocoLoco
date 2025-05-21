@@ -71,7 +71,7 @@ function widthUpdate() {
     }
     if(window.matchMedia("(orientation: portrait)").matches){
         document.getElementById('rotate-your-device').style.display = 'flex';
-        if(world){pause();}
+        if(world){exit();}
     }else{
         document.getElementById('rotate-your-device').style.display = 'none';
     }
